@@ -17,11 +17,9 @@ html
             a.navbar-brand(href='/') New Hope Fertility Intranet
           #navbar.collapse.navbar-collapse
             ul.nav.navbar-nav
-              li(class=(title == 'Members' ? 'active' : ''))
-                a(href='/') Members  
+              li(class=(title == 'Home' ? 'active' : ''))
+                a(href='/') Home  
               if !user
-                  li(class=(title == 'Register' ? 'active' : ''))
-                    a(href='/users/register') Register
                   li(class=(title == 'Login' ? 'active' : ''))
                     a(href='/users/login') Log In
             ul.nav.navbar-nav.navbar-right
@@ -33,7 +31,7 @@ html
           block content
     
   footer
-      p(class='text-center') &copy; 2015, All Rights Reserved
+      p(class='text-center') Copyright &copy; 2015 New Hope Fertility Center
       
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')   
   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')

@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 
 var session = require('express-session');
 var passport = require('passport');
-var LdapStrategy = require('passport-ldapauth');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var mongo = require('mongodb');
@@ -16,7 +15,7 @@ var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var callLog = require('./routes/call_log');
+var calls = require('./routes/calls');
 
 var app = express();
 
@@ -31,32 +30,20 @@ app.use(session({
     resave: true
 }));
 
-//LdapAuthentication
-passport.use(
-		new LdapStrategy({
-		    server: {
-		      url: 'ldap://nhfchq.com',
-		      bindDn: 'web_svc',
-		      bindCredentials: 'W!thh09e@4cc',
-		      searchBase: 'dc=nhfchq,dc=com',
-		      searchFilter: '(sAMAccountName={{username}})',
-		      searchAttributes: ['givenname', 'sn', 'displayname', 'mail', 'department', 'manager', 'samaccountname']  
-		    }
-		})	
-);
+//Make sure people are logged in to view pages
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/users/login');
+}
 
 
 // Set up passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
 
 // Validator
 app.use(expressValidator({
@@ -99,7 +86,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/call_log', callLog);
+app.use('/calls', calls);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -131,6 +118,7 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
 
 
 module.exports = app;

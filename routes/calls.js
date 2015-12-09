@@ -5,5 +5,4 @@ router.get('/', function(req, res, next) {
   res.send('Call log');
 });
 
-
 module.exports = router;
