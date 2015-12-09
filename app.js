@@ -31,11 +31,34 @@ app.use(session({
     resave: true
 }));
 
+//LdapAuthentication
+passport.use(
+		new LdapStrategy({
+		    server: {
+		      url: 'ldap://nhfchq.com',
+		      bindDn: 'web_svc',
+		      bindCredentials: 'W!thh09e@4cc',
+		      searchBase: 'dc=nhfchq,dc=com',
+		      searchFilter: '(sAMAccountName={{username}})',
+		      searchAttributes: ['givenname', 'sn', 'displayname', 'mail', 'department', 'manager', 'samaccountname']  
+		    }
+		})	
+);
+
+
 // Set up passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Validator
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+// Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
       var namespace = param.split('.')
@@ -53,7 +76,8 @@ app.use(expressValidator({
   }
 }));
 
-
+// Flash
+app.use(flash());
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -62,8 +86,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(flash());
 
 app.use('/', routes);
 app.use('/users', users);
