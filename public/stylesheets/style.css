@@ -1,8 +1,37 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Open Sans", sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+footer {
+	background-color: #5e3079;
+	color: #fff;
+	margin-top:20px;
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+
+footer p {
+	padding: 10px;
+}
+
+.navbar-inverse {
+	background-color: #5e3079;
+	color: #fff;
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav>li>a {
+	color: #fff;
+}
+
+.navbar-inverse .navbar-nav>li:hover {
+	background-color: #fff;
+}
+.navbar-inverse .navbar-nav>li:hover>a {
+	color: #5e3079;
 }

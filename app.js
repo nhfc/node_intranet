@@ -16,12 +16,44 @@ var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var callLog = require('./routes/call_log');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// Set up sessions
+app.use(session({
+    secret:'j59vrgje3ekwu6lgse4dbdm8e',
+    saveUninitialized: true,
+    resave: true
+}));
+
+// Set up passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Validator
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
+
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -31,8 +63,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(flash());
+
 app.use('/', routes);
 app.use('/users', users);
+app.use('/call_log', callLog);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
