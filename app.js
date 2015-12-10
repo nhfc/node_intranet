@@ -30,13 +30,14 @@ app.use(session({
     resave: true
 }));
 
-//Make sure people are logged in to view pages
-function ensureAuthenticated(req, res, next){
-    if(req.isAuthenticated()){
+// Make sure people are logged in 
+app.use( function(req, res, next){
+	if(req.isAuthenticated() || req.path === '/users/login'){
         return next();
     }
     res.redirect('/users/login');
-}
+});
+
 
 
 // Set up passport
