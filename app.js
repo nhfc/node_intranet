@@ -10,8 +10,7 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var mongo = require('mongodb');
-var mongoose = require('mongoose');
-var db = mongoose.connection;
+var db = require('monk')('localhost/intranet');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -31,13 +30,14 @@ app.use(session({
 }));
 
 // Make sure people are logged in 
-app.use( function(req, res, next){
-	if(req.isAuthenticated() || req.path === '/users/login'){
+function ensureAuthenticated(req, res, next){
+	if( req.isAuthenticated() ){
         return next();
     }
     res.redirect('/users/login');
-});
+};
 
+app.all('/calls*', ensureAuthenticated);
 
 
 // Set up passport
