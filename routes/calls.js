@@ -12,4 +12,16 @@ router.get('/', function(req, res) {
 	});
 });
 
+router.get('/new', function(req, res) {
+	var db = req.db;
+	var groups = db.get('groups');
+	
+	groups.find({},{}, function(err, groups ) {
+		res.render('calls/new', {
+			"groups": groups
+		});
+	});
+	
+});
+
 module.exports = router;

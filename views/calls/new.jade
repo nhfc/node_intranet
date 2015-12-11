@@ -1,5 +1,17 @@
 extends ../layout
 
 block content
-    h1 New Call
-    
+    form(method="post")
+        .form-group
+            label(for='group') Group: 
+            select.form-control(name='group')
+                option 
+                each group, i in groups
+                    option= group.name
+            
+            label(for='assignedTo') Assigned To:
+            select.form-control(name='assignedTo')
+                option
+
+block scripts                
+    script(src='/javascripts/calls.js') 
