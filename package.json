@@ -15,7 +15,6 @@
     "express-session": "^1.12.1",
     "express-validator": "^2.18.0",
     "jade": "~1.11.0",
-    "kerberos": "file:kerberos",
     "mongodb": "^2.1.0",
     "monk": "^1.0.1",
     "morgan": "~1.6.1",

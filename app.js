@@ -38,7 +38,7 @@ function ensureAuthenticated(req, res, next){
 };
 
 app.all('/calls*', ensureAuthenticated);
-
+app.all('/users/logout', ensureAuthenticated);
 
 // Set up passport
 app.use(passport.initialize());
