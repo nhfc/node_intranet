@@ -18,7 +18,8 @@ router.get('/new', function(req, res) {
 	
 	groups.find({},{}, function(err, groups ) {
 		res.render('calls/new', {
-			"groups": groups
+			title: "New Call"
+			groups: groups
 		});
 	});
 	
