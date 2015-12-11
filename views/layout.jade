@@ -22,11 +22,15 @@ html
               if !user
                   li(class=(title == 'Login' ? 'active' : ''))
                     a(href='/users/login') Log In
+              if user
+                  li
+                    a(href='/calls') Calls
             ul.nav.navbar-nav.navbar-right
               if user
                   li
                     a(href='/users/logout') Logout
       .container
+          h1= title      
           != messages()
           block content
     

@@ -29,23 +29,6 @@ app.use(session({
     resave: true
 }));
 
-// Make sure people are logged in 
-function ensureAuthenticated(req, res, next){
-	if( req.isAuthenticated() ){
-        return next();
-    }
-    res.redirect('/users/login');
-};
-
-app.all('/calls*', ensureAuthenticated);
-app.all('/users/logout', ensureAuthenticated);
-
-// Set up passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-
-
 // Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
@@ -64,18 +47,18 @@ app.use(expressValidator({
   }
 }));
 
+//Set up passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Flash
 app.use(flash());
 app.use(function (req, res, next) {
 	res.locals.messages = require('express-messages')(req, res);
+	res.locals.user = req.user || null;
+	console.log(req.user);
 	next();
 });
-
-app.get('*', function(req, res, next){
-    res.locals.user = req.user || null;
-    next();
-});
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -84,6 +67,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(req, res, next) {
+	req.db =  db;
+	next();
+});
+
+
+//Make sure people are logged in 
+function ensureAuthenticated(req, res, next){
+	if( req.isAuthenticated() ){
+        return next();
+    }
+    res.redirect('/users/login');
+};
+
+
+// Enable routes, make sure those that need to be secured are secured
+app.all('/calls*', ensureAuthenticated);
+app.all('/users/logout', ensureAuthenticated);
 
 app.use('/', routes);
 app.use('/users', users);
