@@ -1,17 +1,17 @@
 extends ../layout
 
 block content
-    form(method="post", ng-controller="CallController")
+    form(method="post", ng-controller="CallController" ng-init='groups= #{JSON.stringify(groups)}')
         .form-group
             label(for='group') Group: 
             select.form-control(name='group', id='group', ng-model='users', ng-change='selectGroup()')
                 option 
                 each group, i in groups
                     option= group.name
-            div(ng-show="users.length > 0")
+            div(ng-show="calls.users.length > 0")
                 label(for='assignedTo') Assigned To:
                 select.form-control(name='assignedTo')
                     option
 
 block scripts                
-    script(src='/javascripts/calls.js') 
+    script(src='/javascripts/intranet.js') 
