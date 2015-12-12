@@ -5,10 +5,13 @@ block content
         .form-group
             label(for='group') Group: 
             select.form-control(name='group', id='group', ng-model="selected.group", ng-options="group.name for group in groups")
-            div()
+                option
+            div(ng-show="selected.group")
                 label(for='assignedTo') Assigned To:
                 select.form-control(name='assignedTo', ng-model="selected.member",  ng-options="member for member in selected.group.members")
                     option
+            label(for='comments') Comments:
+            textarea.form-control(name='comments',id='comments')
 
 block scripts                
     script(src='/javascripts/intranet.js') 
