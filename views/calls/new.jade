@@ -1,17 +1,19 @@
 extends ../layout
 
 block content
-    form(method="post", ng-controller="CallController" ng-init='groups= #{JSON.stringify(groups)}')
+    form(method="post", action='/calls/new', ng-controller="CallController", ng-init='groups=#{JSON.stringify(groups)}')
         .form-group
             label(for='group') Group: 
-            select.form-control(name='group', id='group', ng-model="selected.group", ng-options="group.name for group in groups")
+            select.form-control(name='group', id='group', ng-model="selected.group", ng-options="groupkey as group.name for (groupkey,group) in groups")
                 option
             div(ng-show="selected.group")
                 label(for='assignedTo') Assigned To:
-                select.form-control(name='assignedTo', ng-model="selected.member",  ng-options="member for member in selected.group.members")
+                select.form-control(name='assignedTo', ng-model="selected.assignedTo", ng-options="assignedTo as assignedTo for assignedTo in groups[selected.group].members")
                     option
             label(for='comments') Comments:
             textarea.form-control(name='comments',id='comments')
+            
+            input(type="submit")
 
 block scripts                
     script(src='/javascripts/intranet.js') 
