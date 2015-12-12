@@ -16,7 +16,7 @@ router.get('/new', function(req, res) {
 	var db = req.db;
 	var groups = db.get('groups');
 	
-	groups.find({},{fields: {"_id":0}}, function(err, groups ) {
+	groups.find({},{fields: {"_id":0}, sort: "name"}, function(err, groups ) {
 		res.render('calls/new', {
 			title: "New Call",
 			groups: groups
