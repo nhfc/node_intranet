@@ -23,8 +23,14 @@ html(ng-app="Intranet")
                   li(class=(title == 'Login' ? 'active' : ''))
                     a(href='/users/login') Log In
               if user
-                  li
-                    a(href='/calls') Calls
+                  li.dropdown
+                    a(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Calls
+                    ul.dropdown-menu
+                      li
+                        a(href='/calls') All Calls
+                      li
+                        a(href='/calls/new') New
+                    
             ul.nav.navbar-nav.navbar-right
               if user
                   li
