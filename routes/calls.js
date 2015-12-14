@@ -25,11 +25,19 @@ router.get('/new', function(req, res) {
 	
 });
 
+router.post('/new', function(req, res) {
+	console.log(req.body);
+})
+
 router.get('/:id', function(req, res) {
 	var db = req.db;
 	var calls = db.get('calls');
 	
-	calls.findby
+	calls.findById(req.params.id, function(err, call) {
+		res.render('calls/view', {
+			call: call
+		});
+	});
 });
 
 module.exports = router;
