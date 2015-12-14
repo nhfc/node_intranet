@@ -4,11 +4,11 @@ block content
     form(method="post", action='/calls/new', ng-controller="CallController", ng-init='groups=#{JSON.stringify(groups)}')
         .form-group
             label(for='group') Group: 
-            select.form-control(name='group', id='group', ng-model="selected.group", ng-options="group as group._id for (groupkey,group) in groups")
+            select.form-control(name='group', ng-change='selectGroup()', id='group', ng-model="selected.group", ng-options="group._id as group._id for (groupkey,group) in groups")
                 option
-            div(ng-show="selected.group.members")
+            div(ng-show="selected.group")
                 label(for='assignedTo') Assigned To:
-                select.form-control(name='assignedTo', ng-model="selected.assignedTo", ng-options="assignedTo as assignedTo for assignedTo in selected.group.members")
+                select.form-control(name='assignedTo', ng-model="selected.assignedTo", ng-options="assignedTo as assignedTo for assignedTo in members")
                     option
             label(for='comments') Comments:
             textarea.form-control(name='comments',id='comments')

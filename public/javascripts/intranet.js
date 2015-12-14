@@ -10,8 +10,15 @@
 			},
 			
 		};
-		/*$scope.$watch('selected.group', function(v){
-			$scope.calls.members = ["a", "b", "c"]	
-			});*/
+		
+		$scope.selectGroup = function(){
+			$scope.members = [];
+			for (i = 0; i < $scope.groups.length; i++) {
+				if ($scope.selected.group === $scope.groups[i]._id ) {
+					$scope.members = $scope.groups[i].members;
+					break;
+				}
+			}
+		}  
 	});
 })();
