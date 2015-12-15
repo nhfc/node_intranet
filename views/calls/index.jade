@@ -2,4 +2,4 @@ extends ../layout
 
 block content
     each call, i in calls
-        a(href='/calls/#{call._id}') #{call.EnteredBy}
+        a(href='/calls/#{call._id}') #{call.status}

@@ -34,6 +34,8 @@ router.get('/:id', function(req, res) {
 	var calls = db.get('calls');
 	
 	calls.findById(req.params.id, function(err, call) {
+		call.comments.reverse();
+		call.history.reverse();
 		res.render('calls/view', {
 			call: call
 		});

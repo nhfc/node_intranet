@@ -1,3 +1,7 @@
 extends ../layout
 
 block content
+    h1 Status: #{call.status}
+    
+    each comment, index in call.comments
+        p #{moment(comment.date).format("MMMM D, YYYY")} &mdash; #{comment.text} 
